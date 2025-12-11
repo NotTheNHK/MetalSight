@@ -7,60 +7,54 @@
 
 import Foundation
 
-enum Configuration {
-  case MTL_HUD_LOG_ENABLED
-  case MTL_HUD_LOG_SHADER_ENABLED
-  case MTL_HUD_OPACITY
-  case MTL_HUD_SCALE
-  case MTL_HUD_ALIGNMENT
-  case MTL_HUD_POSITION_X
-  case MTL_HUD_POSITION_Y
-  case MTL_HUD_ELEMENTS
-  case MTL_HUD_ENCODER_TIMING_ENABLED
-  case MTL_HUD_ENCODER_GPU_TIMELINE_FRAME_COUNT
-  case MTL_HUD_ENCODER_GPU_TIMELINE_SWAP_DELTA
-  case MTL_HUD_SHOW_ZERO_METRICS
-  case MTL_HUD_SHOW_METRICS_RANGE
-  case MTL_HUD_INSIGHTS_ENABLED
-  case MTL_HUD_INSIGHT_TIMEOUT
-  case MTL_HUD_DISABLE_MENU_BAR
+// Requirements:
+// * Update UI on change.
+// * Persistents.
+// * Array representation.
+
+enum ElementConfiguration: String, Identifiable, CaseIterable {
+  case device = "Metal Device"
+  case rosetta = "Rosetta Info"
+  case layersize = "Layer Size and Composition"
+  case layerscale = "Layer Scale and Pixel Format"
+  case memory = "Memory"
+  case refreshrate = "Screen Refresh Rate"
+  case thermal = "Thermal State"
+  case gamemode = "Game Mode"
+  case fps = "FPS"
+  case fpsgraph = "FPS Graph"
+  case framenumber = "Frame Number"
+  case gputime = "GPU Time"
+  case presentdelay = "Present Delay"
+  case frameinterval = "Frame Interval"
+  case frameintervalgraph = "Frame Interval Graph"
+  case frameintervalhistogram = "Frame Interval Histogram"
+  case metalcpu = "Command Buffer and Encoder Count"
+  case shaders = "Shader Compiler"
+  case disk = "Disk Usage"
+  case gputimeline = "Encoder Time and GPU Timeline"
+  case toplabeledcommandbuffers = "Top Labeled Command Buffers"
+  case toplabeledencoders = "Top Labeled Encoders"
+
+  var id: Self {
+    self
+  }
 }
 
+enum AlignmentConfiguration: String, Identifiable, CaseIterable {
+  case topleft = "Top-Left"
+  case topcenter = "Top-Center"
+  case topright = "Top-Right"
+  case centerleft = "Center-Left"
+  case centered = "Centered"
+  case centerright = "Center-Right"
+  case bottomright = "Bottom-Right"
+  case bottomcenter = "Bottom-Center"
+  case bottomleft = "Bottom-Left"
 
-enum ElementConfiguration {
-  case device
-  case rosetta
-  case layersize
-  case layerscale
-  case memory
-  case fps
-  case frameinterval
-  case gputime
-  case thermal
-  case frameintervalgraph
-  case presentdelay
-  case frameintervalhistogram
-  case metalcpu
-  case gputimeline
-  case shaders
-  case framenumber
-  case disk
-  case fpsgraph
-  case toplabeledcommandbuffers
-  case toplabeledencoders
-}
-
-
-enum AlignmentConfiguration {
-  case topleft
-  case topcenter
-  case topright
-  case centerleft
-  case centered
-  case centerright
-  case bottomright
-  case bottomcenter
-  case bottomleft
+  var id: Self {
+    self
+  }
 }
 
 /*

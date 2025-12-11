@@ -11,22 +11,48 @@ struct ContentView: View {
   @State private var enabled = false
   @State private var failure = false
 
-  var body: some View {
-    VStack(alignment: .leading) {
-      Toggle("Enable Metal HUD", isOn: $enabled)
-        .toggleStyle(.switch)
+  @State private var placementIsExpanded = false
+  @State private var placement: AlignmentConfiguration = .topright
 
-      Text("Relaunch Crossover, Steam, game to apply")
-        .font(.footnote)
+  @State private var metricsIsExpanded = false
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 10) {
+      MetalHud(enabled: $enabled)
 
       FailureView(failed: failure)
         .padding(.top)
 
+      List {
+        Section("Placement", isExpanded: $placementIsExpanded) {
+          Picker("", selection: $placement) {
+            ForEach(AlignmentConfiguration.allCases) { placement in
+              Text(placement.rawValue)
+            }
+          }
+          .pickerStyle(.inline)
+        }
+        .onTapGesture {
+          placementIsExpanded.toggle()
+        }
+
+        Section("Metrics", isExpanded: $metricsIsExpanded) {
+          ForEach(ElementConfiguration.allCases) { metric in
+            Toggle(metric.rawValue, isOn: .constant(false))
+          }
+        }
+        .listRowSeparator(.hidden)
+        .listRowInsets(.leading, 10)
+        .onTapGesture {
+          metricsIsExpanded.toggle()
+        }
+      }
+      .listStyle(.plain)
+
       Button("Quit", systemImage: "power.circle") {
         NSApp.terminate(nil)
       }
-      .buttonStyle(.plain)
-      .padding(.top)
+      .buttonStyle(.bordered)
     }
     .onAppear {
       do {
@@ -57,7 +83,7 @@ struct ContentView: View {
         if enabled {
           let _ = try Process.run(
             URL(filePath: "/bin/launchctl"),
-            arguments: ["setenv", "MTL_HUD_ENABLED", "1"])
+            arguments: ["setenv", "MTL_HUD_ENABLED", "1", "MTL_HUD_ELEMENTS", ""])
         } else {
           let _ = try Process.run(
             URL(filePath: "/bin/launchctl"),
