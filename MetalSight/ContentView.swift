@@ -17,6 +17,9 @@ struct ContentView: View {
   @State private var metricsIsExpanded = false
   @State private var metrics: Set<String> = []
 
+  @State private var scaleIsExpanded = false
+  @State private var scale = 0.2
+
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
       MetalHud(enabled: $enabled)
@@ -25,6 +28,13 @@ struct ContentView: View {
         .padding(.top)
 
       List {
+        Section("Scale", isExpanded: $scaleIsExpanded) {
+          Slider(value: $scale, in: 0...1, step: 0.1)
+        }
+        .onTapGesture {
+          scaleIsExpanded.toggle()
+        }
+
         Section("Placement", isExpanded: $placementIsExpanded) {
           Picker("", selection: $placement) {
             ForEach(AlignmentConfiguration.allCases) { placement in
@@ -95,7 +105,16 @@ struct ContentView: View {
         if enabled {
           let _ = try Process.run(
             URL(filePath: "/bin/launchctl"),
-            arguments: ["setenv", "MTL_HUD_ENABLED", "1", "MTL_HUD_ELEMENTS", metrics.joined(separator: ",")])
+            arguments: [
+              "setenv",
+              "MTL_HUD_ENABLED",
+              "1",
+              "MTL_HUD_ALIGNMENT",
+              placement.description,
+              "MTL_HUD_SCALE",
+              scale.description,
+              "MTL_HUD_ELEMENTS",
+              metrics.joined(separator: ",")])
         } else {
           let _ = try Process.run(
             URL(filePath: "/bin/launchctl"),

@@ -59,6 +59,10 @@ enum AlignmentConfiguration: String, Identifiable, CaseIterable {
   var id: Self {
     self
   }
+
+  var description: String {
+    "\(self)"
+  }
 }
 
 /*
