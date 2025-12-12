@@ -11,6 +11,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		290C957C2EEC726600A488D5 /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		29825BBC2EDCF066007CF5BF /* MetalSight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalSight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29EDC8332EE73DFA00D095B5 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -46,6 +47,7 @@
 		29825BBD2EDCF066007CF5BF /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				290C957C2EEC726600A488D5 /* HUDView.swift */,
 				29825BBC2EDCF066007CF5BF /* MetalSight.app */,
 			);
 			name = Products;
@@ -279,6 +281,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Barreloofy.MetalSight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -325,6 +328,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Barreloofy.MetalSight;
 				PRODUCT_NAME = "$(TARGET_NAME)";

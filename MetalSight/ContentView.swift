@@ -11,65 +11,28 @@ struct ContentView: View {
   @State private var enabled = false
   @State private var failure = false
 
-  @State private var placementIsExpanded = false
   @State private var placement: AlignmentConfiguration = .topright
-
-  @State private var metricsIsExpanded = false
-  @State private var metrics: Set<String> = []
-
-  @State private var scaleIsExpanded = false
   @State private var scale = 0.2
+
+  @State private var metrics: Set<String> = []
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      MetalHud(enabled: $enabled)
+      MetalHUD(enabled: $enabled)
 
-      FailureView(failed: failure)
-        .padding(.top)
-
-      List {
-        Section("Scale", isExpanded: $scaleIsExpanded) {
-          Slider(value: $scale, in: 0...1, step: 0.1)
-        }
-        .onTapGesture {
-          scaleIsExpanded.toggle()
+      TabView {
+        Tab {
+          HUDView(placement: $placement, scale: $scale)
+        } label: {
+          Text("HUD")
         }
 
-        Section("Placement", isExpanded: $placementIsExpanded) {
-          Picker("", selection: $placement) {
-            ForEach(AlignmentConfiguration.allCases) { placement in
-              Text(placement.rawValue)
-            }
-          }
-          .pickerStyle(.inline)
-        }
-        .onTapGesture {
-          placementIsExpanded.toggle()
-        }
-
-        Section("Metrics", isExpanded: $metricsIsExpanded) {
-          ForEach(ElementConfiguration.allCases) { metric in
-            Toggle(
-              metric.rawValue,
-              isOn: Binding {
-                metrics.contains(metric.description)
-              } set: { newValue in
-                if newValue {
-                  metrics.insert(metric.description)
-                } else {
-                  metrics.remove(metric.description)
-                }
-              })
-          }
-        }
-        .listRowSeparator(.hidden)
-        .listRowInsets(.leading, 10)
-        .onTapGesture {
-          metricsIsExpanded.toggle()
+        Tab {
+          MetricsView(metrics: $metrics)
+        } label: {
+          Text("Metrics")
         }
       }
-      .listStyle(.plain)
-      .scrollIndicators(.never)
 
       Button("Quit", systemImage: "power.circle") {
         NSApp.terminate(nil)
@@ -103,6 +66,8 @@ struct ContentView: View {
     .onChange(of: enabled) {
       do {
         if enabled {
+          print(metrics.joined(separator: ","))
+
           let _ = try Process.run(
             URL(filePath: "/bin/launchctl"),
             arguments: [
