@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct HUDView: View {
-  @Binding var placement: AlignmentConfiguration
+  @Binding var placement: HUDPlacement
   @Binding var scale: Double
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
       Section("Placement") {
         Picker("", selection: $placement) {
-          ForEach(AlignmentConfiguration.allCases) { placement in
+          ForEach(HUDPlacement.allCases) { placement in
             Text(placement.rawValue)
           }
         }
@@ -33,7 +33,7 @@ struct HUDView: View {
 
 
 #Preview {
-  @Previewable @State var placement = AlignmentConfiguration.topright
+  @Previewable @State var placement = HUDPlacement.topright
   @Previewable @State var scale = 0.2
 
   HUDView(placement: $placement, scale: $scale)

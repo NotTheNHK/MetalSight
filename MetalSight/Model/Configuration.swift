@@ -12,59 +12,6 @@ import Foundation
 // * Persistents.
 // * Array representation.
 
-enum ElementConfiguration: String, Identifiable, CaseIterable {
-  case device = "Metal Device"
-  case rosetta = "Rosetta Info"
-  case layersize = "Layer Size and Composition"
-  case layerscale = "Layer Scale and Pixel Format"
-  case memory = "Memory"
-  case refreshrate = "Screen Refresh Rate"
-  case thermal = "Thermal State"
-  case gamemode = "Game Mode"
-  case fps = "FPS"
-  case fpsgraph = "FPS Graph"
-  case framenumber = "Frame Number"
-  case gputime = "GPU Time"
-  case presentdelay = "Present Delay"
-  case frameinterval = "Frame Interval"
-  case frameintervalgraph = "Frame Interval Graph"
-  case frameintervalhistogram = "Frame Interval Histogram"
-  case metalcpu = "Command Buffer and Encoder Count"
-  case shaders = "Shader Compiler"
-  case disk = "Disk Usage"
-  case gputimeline = "Encoder Time and GPU Timeline"
-  case toplabeledcommandbuffers = "Top Labeled Command Buffers"
-  case toplabeledencoders = "Top Labeled Encoders"
-
-  var id: Self {
-    self
-  }
-
-  var description: String {
-    "\(self)"
-  }
-}
-
-enum AlignmentConfiguration: String, Identifiable, CaseIterable {
-  case topleft = "Top-Left"
-  case topcenter = "Top-Center"
-  case topright = "Top-Right"
-  case centerleft = "Center-Left"
-  case centered = "Centered"
-  case centerright = "Center-Right"
-  case bottomright = "Bottom-Right"
-  case bottomcenter = "Bottom-Center"
-  case bottomleft = "Bottom-Left"
-
-  var id: Self {
-    self
-  }
-
-  var description: String {
-    "\(self)"
-  }
-}
-
 /*
  MTL_HUD_LOG_ENABLED=1
  Turns on logging for per-frame statistics.
