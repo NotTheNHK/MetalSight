@@ -72,3 +72,15 @@ import Foundation
  MTL_HUD_DISABLE_MENU_BAR=1
  Disables the Metal Performance HUD menu item.
  */
+
+
+/*
+ MTL_HUD_ENCODER_GPU_TIMELINE_FRAME_COUNT=6
+ Sets the maximum number of frames that appear in the GPU timeline.
+
+ MTL_HUD_ENCODER_GPU_TIMELINE_SWAP_DELTA=1
+ Sets the update interval of the GPU timeline in seconds.
+
+ MTL_HUD_RUSAGE_UPDATE_INTERVAL=3
+ Sets the system resource usage update interval in seconds
+ */

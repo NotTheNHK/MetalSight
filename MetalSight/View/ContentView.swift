@@ -10,11 +10,11 @@ import SwiftUI
 struct ContentView: View {
   @State private var enabled = false
 
-  @State private var placement: HUDPlacement = .topright
-  @State private var scale = 0.2
+  @AppStorage("placement") private var placement: HUDPlacement = .topright
+  @AppStorage("scale") private var scale = 0.2
 
-  @State private var metricsModifier: Set<String> = []
-  @State private var metrics: Set<String> = []
+  @AppStorage("metricsModifier") private var metricsModifier: Set<String> = []
+  @AppStorage("metrics") private var metrics: Set<String> = []
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
