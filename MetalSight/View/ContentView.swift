@@ -8,17 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State private var enabled = false
+  @State
+  private var enabled = false
 
-  @AppStorage("placement") private var placement: HUDPlacement = .topright
-  @AppStorage("scale") private var scale = 0.2
-
-  @AppStorage("metrics") private var metrics: Set<String> = []
-  @AppStorage("metricsModifier") private var metricsModifier: Dictionary<String, Int> = [
-    "MTL_HUD_ENCODER_GPU_TIMELINE_FRAME_COUNT": 6,
-    "MTL_HUD_ENCODER_GPU_TIMELINE_SWAP_DELTA": 1,
-    "MTL_HUD_RUSAGE_UPDATE_INTERVAL": 3,
-  ]
+  @CodableStorage("configuration")
+  private var configuration = Configuration()
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
@@ -27,16 +21,16 @@ struct ContentView: View {
       TabView {
         Tab {
           HUDView(
-            placement: $placement,
-            scale: $scale)
+            placement: $configuration.placement,
+            scale: $configuration.scale)
         } label: {
           Text("HUD")
         }
 
         Tab {
           MetricsView(
-            metrics: $metrics,
-            metricsModifier: $metricsModifier)
+            metrics: $configuration.metrics,
+            metricsModifier: $configuration.metricsModifier)
         } label: {
           Text("Metrics")
         }
@@ -69,29 +63,22 @@ struct ContentView: View {
       if enabled {
         _ = try? Process.run(
           URL(filePath: "/bin/launchctl"),
-          arguments: [
-            "setenv",
-            "MTL_HUD_ENABLED",
-            "1",
-            "MTL_HUD_DISABLE_MENU_BAR",
-            "1",
-            "MTL_HUD_ALIGNMENT",
-            placement.description,
-            "MTL_HUD_SCALE",
-            scale.description,
-            "MTL_HUD_ELEMENTS",
-            metrics.joined(separator: ",")])
+          arguments: configuration.asArguments)
       } else {
         _ = try? Process.run(
           URL(filePath: "/bin/launchctl"),
           arguments: ["unsetenv", "MTL_HUD_ENABLED"])
       }
     }
-    .onChange(of: metricsModifier) {
-      _ = metricsModifier.reduce(into: [String]()) { result, element in
-        result.append(element.key)
-        result.append(String(element.value))
-      }
+    .task(id: configuration) {
+      guard
+        enabled == true,
+        let _ = try? await Task.sleep(for: .seconds(0.5))
+      else { return }
+
+      _ = try? Process.run(
+        URL(filePath: "/bin/launchctl"),
+        arguments: configuration.asArguments)
     }
   }
 }

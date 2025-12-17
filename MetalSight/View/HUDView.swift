@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct HUDView: View {
-  @Binding var placement: HUDPlacement
-  @Binding var scale: Double
+  @Binding
+  var placement: HUDPlacement
+  @Binding
+  var scale: Double
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
@@ -33,8 +35,10 @@ struct HUDView: View {
 
 
 #Preview {
-  @Previewable @State var placement = HUDPlacement.topright
-  @Previewable @State var scale = 0.2
+  @Previewable @State
+  var placement = HUDPlacement.topright
+  @Previewable @State
+  var scale = 0.2
 
   HUDView(placement: $placement, scale: $scale)
 }

@@ -2,15 +2,50 @@
 // Configuration.swift
 // MetalSight
 //
-// Created by Barreloofy on 12/8/25 at 4:57 PM
+// Created by Barreloofy on 12/17/25 at 5:53 PM
 //
 
-import Foundation
+struct Configuration: Equatable, Codable {
+  var placement: HUDPlacement = .topright
+  var scale = 0.2
 
-// Requirements:
-// * Update UI on change.
-// * Persistents.
-// * Array representation.
+  var metrics: Set<String> = []
+  var metricsModifier: Dictionary<String, Int> = [
+    "MTL_HUD_ENCODER_GPU_TIMELINE_FRAME_COUNT": 6,
+    "MTL_HUD_ENCODER_GPU_TIMELINE_SWAP_DELTA": 1,
+    "MTL_HUD_RUSAGE_UPDATE_INTERVAL": 3,
+  ]
+
+  var metricsModifierAsArray: [String] {
+    metricsModifier.reduce(into: [String]()) { partialResult, element in
+      partialResult.append(element.key)
+      partialResult.append(String(element.value))
+    }
+  }
+
+  var metricsAsString: String {
+    metrics.joined(separator: ",")
+  }
+
+  var asArguments: [String] {
+    [
+      "setenv",
+      "MTL_HUD_ENABLED",
+      "1",
+      "MTL_HUD_DISABLE_MENU_BAR",
+      "1",
+      "MTL_HUD_ALIGNMENT",
+      placement.description,
+      "MTL_HUD_SCALE",
+      scale.description,
+      "MTL_HUD_ELEMENTS",
+      metricsAsString,
+    ]
+    +
+    metricsModifierAsArray
+  }
+}
+
 
 /*
  MTL_HUD_LOG_ENABLED=1
@@ -51,6 +86,7 @@ import Foundation
 
  MTL_HUD_SHOW_METRICS_RANGE=1
  Reports the range of metrics for the last 1200 frames. See Display the value range of metrics for more information.
+
  MTL_HUD_INSIGHTS_ENABLED=1
  Turns on the performance insights feature. See Gaining performance insights with the Metal Performance HUD for more information.
 
@@ -71,16 +107,4 @@ import Foundation
 
  MTL_HUD_DISABLE_MENU_BAR=1
  Disables the Metal Performance HUD menu item.
- */
-
-
-/*
- MTL_HUD_ENCODER_GPU_TIMELINE_FRAME_COUNT=6
- Sets the maximum number of frames that appear in the GPU timeline.
-
- MTL_HUD_ENCODER_GPU_TIMELINE_SWAP_DELTA=1
- Sets the update interval of the GPU timeline in seconds.
-
- MTL_HUD_RUSAGE_UPDATE_INTERVAL=3
- Sets the system resource usage update interval in seconds
  */

@@ -109,7 +109,12 @@ struct MetricsView: View {
 
 
 #Preview {
+  @Previewable @State
+  var metrics = Set<String>()
+  @Previewable @State
+  var metricsModifier = Dictionary<String, Int>()
+
   MetricsView(
-    metrics: .constant([]),
-    metricsModifier: .constant([:]))
+    metrics: $metrics,
+    metricsModifier: $metricsModifier)
 }

@@ -5,7 +5,7 @@
 // Created by Barreloofy on 12/12/25 at 7:13 PM
 //
 
-enum HUDPlacement: String, Identifiable, CaseIterable {
+enum HUDPlacement: String, Identifiable, Codable, CaseIterable {
   case topleft = "Top-Left"
   case topcenter = "Top-Center"
   case topright = "Top-Right"
