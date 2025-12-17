@@ -1,5 +1,5 @@
 //
-// MetricsView.swift
+// MetricsConfiguration.swift
 // MetalSight
 //
 // Created by Barreloofy on 12/12/25 at 5:00 PM
@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct MetricsView: View {
-  @Binding var metrics: Set<String>
-  @Binding var metricsModifier: Dictionary<String, Int>
+struct MetricsConfiguration: View {
+  @Binding
+  var metrics: Set<String>
+  @Binding
+  var metricsModifier: Dictionary<String, Int>
 
   private func selection(for key: String) -> Binding<Int> {
     Binding {
@@ -67,6 +69,7 @@ struct MetricsView: View {
               Text(count.description)
             }
           }
+          .help("The maximum number of frames that appear in the GPU timeline")
 
         Picker(
           "GPU Timeline Update Interval",
@@ -75,6 +78,7 @@ struct MetricsView: View {
               Text(interval.description)
             }
           }
+          .help("The update interval of the GPU timeline in seconds")
 
         Picker(
           "System Resource Update Interval",
@@ -83,6 +87,7 @@ struct MetricsView: View {
               Text(interval.description)
             }
           }
+          .help("The system resource usage update interval in seconds")
       }
       .listRowSeparator(.hidden)
 
@@ -114,7 +119,7 @@ struct MetricsView: View {
   @Previewable @State
   var metricsModifier = Dictionary<String, Int>()
 
-  MetricsView(
+  MetricsConfiguration(
     metrics: $metrics,
     metricsModifier: $metricsModifier)
 }

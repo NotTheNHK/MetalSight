@@ -1,5 +1,5 @@
 //
-// HUDView.swift
+// HUDConfiguration.swift
 // MetalSight
 //
 // Created by Barreloofy on 12/12/25 at 4:57 PM
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HUDView: View {
+struct HUDConfiguration: View {
   @Binding
   var placement: HUDPlacement
   @Binding
@@ -40,5 +40,5 @@ struct HUDView: View {
   @Previewable @State
   var scale = 0.2
 
-  HUDView(placement: $placement, scale: $scale)
+  HUDConfiguration(placement: $placement, scale: $scale)
 }

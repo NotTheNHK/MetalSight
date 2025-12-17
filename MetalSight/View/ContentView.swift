@@ -16,11 +16,11 @@ struct ContentView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      MetalHUD(enabled: $enabled)
+      HUDControl(enabled: $enabled)
 
       TabView {
         Tab {
-          HUDView(
+          HUDConfiguration(
             placement: $configuration.placement,
             scale: $configuration.scale)
         } label: {
@@ -28,7 +28,7 @@ struct ContentView: View {
         }
 
         Tab {
-          MetricsView(
+          MetricsConfiguration(
             metrics: $configuration.metrics,
             metricsModifier: $configuration.metricsModifier)
         } label: {
