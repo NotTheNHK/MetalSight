@@ -14,7 +14,7 @@ struct MetricsConfiguration: View {
   var metricsModifier: Dictionary<String, Int>
 
   @AppStorage("preset")
-  private var preset: MetricsPreset = .custom
+  private var preset: MetricsPreset = .default
 
   private func selection(for key: String, default defaultValue: Int) -> Binding<Int> {
     Binding {
