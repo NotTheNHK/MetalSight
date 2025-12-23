@@ -11,8 +11,8 @@ import SwiftUI
 struct CodableStorage<Value: Codable>: DynamicProperty {
   private var storage: AppStorage<Data>
 
-  private let decoder = JSONDecoder()
   private let encoder = JSONEncoder()
+  private let decoder = JSONDecoder()
 
   init(wrappedValue: Value, _ key: String) {
     storage = AppStorage(wrappedValue: try! encoder.encode(wrappedValue), key)
@@ -23,7 +23,7 @@ struct CodableStorage<Value: Codable>: DynamicProperty {
       try! decoder.decode(Value.self, from: storage.wrappedValue)
     }
     nonmutating set {
-      storage.wrappedValue = try! JSONEncoder().encode(newValue)
+      storage.wrappedValue = try! encoder.encode(newValue)
     }
   }
 
