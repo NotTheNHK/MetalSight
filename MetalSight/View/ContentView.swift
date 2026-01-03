@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State
+  @AppStorage("enabled")
   private var enabled = false
 
   @CodableStorage("configuration")
   private var configuration = Configuration()
+
+  private let launchctlURL = URL(filePath: "/bin/launchctl")
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
@@ -38,32 +40,14 @@ struct ContentView: View {
 
       AppControl()
     }
-    .onAppear {
-      let process = Process()
-      process.executableURL = URL(filePath: "/bin/launchctl")
-      process.arguments = ["getenv", "MTL_HUD_ENABLED"]
-
-      let pipe = Pipe()
-      process.standardOutput = pipe
-
-      guard
-        let _ = try? process.run(),
-        let data = try? pipe.fileHandleForReading.readToEnd(),
-        let rawValue = String(data: data, encoding: .utf8),
-        let rawValueAsInt = Int(rawValue.trimmingCharacters(in: .whitespacesAndNewlines)),
-        let isEnabled = Bool(exactly: rawValueAsInt as NSNumber)
-      else { return }
-
-      enabled = isEnabled
-    }
     .onChange(of: enabled) {
       if enabled {
-        _ = try? Process.run(
-          URL(filePath: "/bin/launchctl"),
+        try! Process.run(
+          launchctlURL,
           arguments: configuration.asArguments)
       } else {
-        _ = try? Process.run(
-          URL(filePath: "/bin/launchctl"),
+        try! Process.run(
+          launchctlURL,
           arguments: ["unsetenv", "MTL_HUD_ENABLED"])
       }
     }
@@ -73,8 +57,8 @@ struct ContentView: View {
         let _ = try? await Task.sleep(for: .seconds(0.5))
       else { return }
 
-      _ = try? Process.run(
-        URL(filePath: "/bin/launchctl"),
+      try! Process.run(
+        launchctlURL,
         arguments: configuration.asArguments)
     }
   }
