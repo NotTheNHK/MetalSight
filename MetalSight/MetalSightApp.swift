@@ -12,7 +12,7 @@ struct MetalSightApp: App {
   var body: some Scene {
     MenuBarExtra("Metal Sight", systemImage: "gamecontroller.fill") {
       ContentView()
-        .scenePadding()
+				.scenePadding()
     }
     .menuBarExtraStyle(.window)
   }

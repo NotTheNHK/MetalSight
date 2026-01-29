@@ -9,7 +9,8 @@ import SwiftUI
 
 @propertyWrapper
 struct CodableStorage<Value: Codable>: DynamicProperty {
-	@AppStorage private var storage: Data
+	@AppStorage
+	private var storage: Data
 
 	private let encoder = JSONEncoder()
 	private let decoder = JSONDecoder()
