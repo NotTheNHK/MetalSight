@@ -9,39 +9,41 @@ import SwiftUI
 import ServiceManagement
 
 struct AppControl: View {
-  @Environment(\.appearsActive) private var appearsActive
+	@Environment(\.appearsActive)
+	private var appearsActive
 
-  @State private var launchAtLogin = false
+	@State
+	private var launchAtLogin = false
 
-  var body: some View {
-    HStack {
-      Button("Quit", systemImage: "power.circle", role: .close) {
-        NSApp.terminate(nil)
-      }
-      .tint(.red)
+	var body: some View {
+		HStack {
+			Button("Quit", systemImage: "power.circle", role: .close) {
+				NSApp.terminate(nil)
+			}
+			.tint(.red)
 
-      Spacer()
+			Spacer()
 
-      Toggle("Launch At Login", isOn: $launchAtLogin)
-    }
-    .onChange(of: appearsActive, initial: true) {
-      if SMAppService.mainApp.status == .enabled {
-        launchAtLogin = true
-      } else {
-        launchAtLogin = false
-      }
-    }
-    .onChange(of: launchAtLogin) {
-      if launchAtLogin {
-        try? SMAppService.mainApp.register()
-      } else {
-        try? SMAppService.mainApp.unregister()
-      }
-    }
-  }
+			Toggle("Launch At Login", isOn: $launchAtLogin)
+		}
+		.onChange(of: appearsActive, initial: true) {
+			if SMAppService.mainApp.status == .enabled {
+				launchAtLogin = true
+			} else {
+				launchAtLogin = false
+			}
+		}
+		.onChange(of: launchAtLogin) {
+			if launchAtLogin {
+				try? SMAppService.mainApp.register()
+			} else {
+				try? SMAppService.mainApp.unregister()
+			}
+		}
+	}
 }
 
 
 #Preview {
-  AppControl()
+	AppControl()
 }

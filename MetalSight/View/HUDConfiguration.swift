@@ -8,37 +8,38 @@
 import SwiftUI
 
 struct HUDConfiguration: View {
-  @Binding
-  var placement: HUDPlacement
-  @Binding
-  var scale: Double
+	@Binding
+	var placement: HUDPlacement
 
-  var body: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      Section("Placement") {
-        Picker("", selection: $placement) {
-          ForEach(HUDPlacement.allCases) { placement in
-            Text(placement.rawValue)
-          }
-        }
-        .pickerStyle(.inline)
-      }
+	@Binding
+	var scale: Double
 
-      Section("Scale") {
-        Slider(value: $scale, in: 0...1, step: 0.1)
-          .padding(.top, -5)
-      }
-    }
-    .padding()
-  }
+	var body: some View {
+		VStack(alignment: .leading, spacing: 10) {
+			Section("Placement") {
+				Picker(selection: $placement) {
+					ForEach(HUDPlacement.allCases) { placement in
+						Text(placement.rawValue)
+					}
+				} label: {}
+					.pickerStyle(.inline)
+			}
+
+			Section("Scale") {
+				Slider(value: $scale, in: 0...1, step: 0.1)
+					.padding(.top, -5)
+			}
+		}
+		.padding()
+	}
 }
 
 
 #Preview {
-  @Previewable @State
-  var placement = HUDPlacement.topright
-  @Previewable @State
-  var scale = 0.2
+	@Previewable @State
+	var placement = HUDPlacement.topright
+	@Previewable @State
+	var scale = 0.2
 
-  HUDConfiguration(placement: $placement, scale: $scale)
+	HUDConfiguration(placement: $placement, scale: $scale)
 }

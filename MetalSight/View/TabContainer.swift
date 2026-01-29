@@ -11,13 +11,13 @@ import SwiftUI
 
 struct TabContainer: View {
 	@State
-	private var viewState = Tab.hud
+	private var tabState = Tab.hud
 
 	@Binding
 	var configuration: Configuration
 
 	var body: some View {
-		Picker(selection: $viewState) {
+		Picker(selection: $tabState) {
 			ForEach(Tab.allCases) { tab in
 				Text(tab.rawValue)
 			}
@@ -25,7 +25,7 @@ struct TabContainer: View {
 			.pickerStyle(.segmented)
 			.frame(maxWidth: .infinity, alignment: .center)
 
-		if viewState == .hud {
+		if tabState == .hud {
 			HUDConfiguration(
 				placement: $configuration.placement,
 				scale: $configuration.scale)

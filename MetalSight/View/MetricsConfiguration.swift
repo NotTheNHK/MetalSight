@@ -10,6 +10,7 @@ import SwiftUI
 struct MetricsConfiguration: View {
   @Binding
   var metrics: Set<String>
+
   @Binding
   var metricsModifier: Dictionary<String, Int>
 
