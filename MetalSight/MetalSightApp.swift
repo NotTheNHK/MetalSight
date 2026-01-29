@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct MetalSightApp: App {
-  var body: some Scene {
-    MenuBarExtra("Metal Sight", systemImage: "gamecontroller.fill") {
-      ContentView()
+	var body: some Scene {
+		MenuBarExtra("Metal Sight", systemImage: "gamecontroller.fill") {
+			ContentView()
 				.scenePadding()
-    }
-    .menuBarExtraStyle(.window)
-  }
+		}
+		.menuBarExtraStyle(.window)
+	}
 }

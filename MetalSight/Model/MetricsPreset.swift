@@ -6,13 +6,13 @@
 //
 
 enum MetricsPreset: String, Identifiable, CaseIterable {
-  case `default` = "Default"
-  case fpsOnly = "FPS Only"
-  case rich = "Rich"
-  case full = "Full"
-  case custom = "Custom"
+	case `default` = "Default"
+	case fpsOnly = "FPS Only"
+	case rich = "Rich"
+	case full = "Full"
+	case custom = "Custom"
 
-  var id: Self {
-    self
-  }
+	var id: Self {
+		self
+	}
 }

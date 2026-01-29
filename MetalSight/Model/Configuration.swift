@@ -6,40 +6,40 @@
 //
 
 struct Configuration: Equatable, Codable {
-  var placement: HUDPlacement = .topright
-  var scale = 0.2
+	var placement: HUDPlacement = .topright
+	var scale = 0.2
 
-  var metrics: Set<String> = Configuration.default
-  var metricsModifier: Dictionary<String, Int> = [:]
+	var metrics: Set<String> = Configuration.default
+	var metricsModifier: Dictionary<String, Int> = [:]
 
-  private var metricsModifierAsArray: [String] {
-    metricsModifier.reduce(into: [String]()) { result, element in
-      result.append(element.key)
-      result.append(String(element.value))
-    }
-  }
+	private var metricsModifierAsArray: [String] {
+		metricsModifier.reduce(into: [String]()) { result, element in
+			result.append(element.key)
+			result.append(String(element.value))
+		}
+	}
 
-  private var metricsAsString: String {
-    metrics.joined(separator: ",")
-  }
+	private var metricsAsString: String {
+		metrics.joined(separator: ",")
+	}
 
-  var asArguments: [String] {
-    [
-      "setenv",
-      "MTL_HUD_ENABLED",
-      "1",
-      "MTL_HUD_DISABLE_MENU_BAR",
-      "1",
-      "MTL_HUD_ALIGNMENT",
-      placement.description,
-      "MTL_HUD_SCALE",
-      scale.description,
-      "MTL_HUD_ELEMENTS",
-      metricsAsString,
-    ]
-    +
-    metricsModifierAsArray
-  }
+	var asArguments: [String] {
+		[
+			"setenv",
+			"MTL_HUD_ENABLED",
+			"1",
+			"MTL_HUD_DISABLE_MENU_BAR",
+			"1",
+			"MTL_HUD_ALIGNMENT",
+			placement.description,
+			"MTL_HUD_SCALE",
+			scale.description,
+			"MTL_HUD_ELEMENTS",
+			metricsAsString,
+		]
+		+
+		metricsModifierAsArray
+	}
 }
 
 
