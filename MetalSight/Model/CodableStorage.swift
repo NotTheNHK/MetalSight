@@ -9,29 +9,32 @@ import SwiftUI
 
 @propertyWrapper
 struct CodableStorage<Value: Codable>: DynamicProperty {
-  private var storage: AppStorage<Data>
+	@AppStorage private var storage: Data
 
-  private let encoder = JSONEncoder()
-  private let decoder = JSONDecoder()
+	private let encoder = JSONEncoder()
+	private let decoder = JSONDecoder()
 
-  init(wrappedValue: Value, _ key: String) {
-    storage = AppStorage(wrappedValue: try! encoder.encode(wrappedValue), key)
-  }
+	init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
+		self._storage = AppStorage(
+			wrappedValue: try! encoder.encode(wrappedValue),
+			key,
+			store: store)
+	}
 
-  var wrappedValue: Value {
-    get {
-      try! decoder.decode(Value.self, from: storage.wrappedValue)
-    }
-    nonmutating set {
-      storage.wrappedValue = try! encoder.encode(newValue)
-    }
-  }
+	var wrappedValue: Value {
+		get {
+			try! decoder.decode(Value.self, from: storage)
+		}
+		nonmutating set {
+			storage = try! encoder.encode(newValue)
+		}
+	}
 
-  var projectedValue: Binding<Value> {
-    Binding {
-      wrappedValue
-    } set: { newValue in
-      wrappedValue = newValue
-    }
-  }
+	var projectedValue: Binding<Value> {
+		Binding {
+			wrappedValue
+		} set: { newValue in
+			wrappedValue = newValue
+		}
+	}
 }
