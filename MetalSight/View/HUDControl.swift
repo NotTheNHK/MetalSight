@@ -12,12 +12,10 @@ struct HUDControl: View {
 	var enabled: Bool
 
 	var body: some View {
-		Section {
-			Toggle("Metal HUD", isOn: $enabled)
-				.toggleStyle(.switch)
+		Toggle("Metal HUD", isOn: $enabled)
+			.toggleStyle(.switch)
 
-			Text("Relaunch Crossover, Steam or game to apply")
-				.font(.footnote)
-		}
+		Text("Relaunch Crossover, Steam or game to apply")
+			.font(.footnote)
 	}
 }

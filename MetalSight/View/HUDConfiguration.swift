@@ -27,10 +27,8 @@ struct HUDConfiguration: View {
 
 			Section("Scale") {
 				Slider(value: $scale, in: 0...1, step: 0.1)
-					.padding(.top, -5)
 			}
 		}
-		.padding()
 	}
 }
 
