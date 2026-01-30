@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-// TODO: Improve view hierarchy retention
+// NOTE: This serves as a usable enough replacement for SwiftUI's native `TabView`, as there are visual limitations when used from inside `MenuBarExtra`.
 
 struct TabContainer: View {
 	@State
-	private var tabState = Tab.hud
+	private var selectedTab = Tab.hud
 
 	@Binding
 	var configuration: Configuration
 
 	var body: some View {
-		Picker(selection: $tabState) {
+		Picker(selection: $selectedTab) {
 			ForEach(Tab.allCases) { tab in
 				Text(tab.rawValue)
 			}
@@ -25,14 +25,24 @@ struct TabContainer: View {
 			.pickerStyle(.segmented)
 			.frame(maxWidth: .infinity, alignment: .center)
 
-		if tabState == .hud {
+		ZStack {
 			HUDConfiguration(
 				placement: $configuration.placement,
 				scale: $configuration.scale)
-		} else {
+			.opacity(selectedTab == .hud ? 1 : 0)
+
 			MetricsConfiguration(
 				metrics: $configuration.metrics,
 				metricsModifier: $configuration.metricsModifier)
+			.opacity(selectedTab == .metrics ? 1 : 0)
 		}
 	}
+}
+
+
+#Preview {
+	@Previewable @State
+	var configuration = Configuration()
+
+	TabContainer(configuration: $configuration)
 }

@@ -36,8 +36,11 @@ struct HUDConfiguration: View {
 #Preview {
 	@Previewable @State
 	var placement = HUDPlacement.topright
+
 	@Previewable @State
 	var scale = 0.2
 
-	HUDConfiguration(placement: $placement, scale: $scale)
+	HUDConfiguration(
+		placement: $placement,
+		scale: $scale)
 }

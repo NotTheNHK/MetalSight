@@ -160,6 +160,7 @@ struct MetricsConfiguration: View {
 #Preview {
 	@Previewable @State
 	var metrics = Set<String>()
+
 	@Previewable @State
 	var metricsModifier = Dictionary<String, Int>()
 

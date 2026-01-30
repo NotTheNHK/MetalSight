@@ -19,3 +19,11 @@ struct HUDControl: View {
 			.font(.footnote)
 	}
 }
+
+
+#Preview {
+	@Previewable @State
+	var enabled = true
+
+	HUDControl(enabled: $enabled)
+}
