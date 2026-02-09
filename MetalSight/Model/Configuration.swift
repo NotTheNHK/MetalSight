@@ -9,8 +9,8 @@ struct Configuration: Equatable, Codable {
 	var placement: HUDPlacement = .topright
 	var scale = 0.2
 
-	var metrics: Set<String> = Configuration.default
-	var metricsModifier: Dictionary<String, Int> = [:]
+	var metrics = Configuration.default
+	var metricsModifier = [String: Int]()
 
 	private var metricsModifierAsArray: [String] {
 		metricsModifier.reduce(into: [String]()) { result, element in
