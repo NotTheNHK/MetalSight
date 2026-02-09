@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-// Fix ME: preset state
-
 struct MetricsConfiguration: View {
 	@AppStorage("preset")
 	private var preset: MetricsPreset = .default
@@ -93,6 +91,24 @@ struct MetricsConfiguration: View {
 							metrics = Configuration.full
 						case .custom:
 							break
+						}
+					}
+					.task(id: metrics) {
+						guard
+							let _ = try? await Task.sleep(for: .seconds(0.75))
+						else { return }
+
+						switch metrics {
+						case Configuration.default:
+							preset = .default
+						case Configuration.rich:
+							preset = .rich
+						case Configuration.full:
+							preset = .full
+						case Configuration.fpsOnly:
+							preset = .fpsOnly
+						default:
+							preset = .custom
 						}
 					}
 			}
